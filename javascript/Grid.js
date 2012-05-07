@@ -23,7 +23,7 @@ UMN ID: 3955359
       return this.width = this.grid[0].length;
     };
     Grid.prototype.draw = function() {
-      var $cell, $cells, $row, cell, i, j, px, row, _len, _len2, _ref;
+      var $cell, $cells, $row, cell, em, i, j, px, row, _len, _len2, _ref;
       this.$div.html('');
       _ref = this.grid;
       for (i = 0, _len = _ref.length; i < _len; i++) {
@@ -50,8 +50,9 @@ UMN ID: 3955359
       $cells = this.$div.find('.cell');
       px = baseWidth / this.width;
       px = px < 5 ? 5 : px;
-      $cells.width(px + 'px');
-      return $cells.height(px + 'px');
+      em = px / 10;
+      $cells.width(em + 'em');
+      return $cells.height(em + 'em');
     };
     Grid.prototype.getCell = function(name) {
       return this.$div.find('[data-name="' + name + '"]');

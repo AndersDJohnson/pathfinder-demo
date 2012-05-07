@@ -465,8 +465,9 @@ body {
   border-width: 2px;
   border-style: solid;
   border-color: #ccc;
-  width: 10px;
   color: black;
+  font-size: 1em;
+  line-height: 1em;
 }
 #maps .map-wrap .map .cell.wall {
   background: #000 !important;

@@ -39,8 +39,9 @@ if typeof @define isnt 'function'
 		$cells = @$div.find('.cell')
 		px = baseWidth / @width
 		px = if px < 5 then 5 else px
-		$cells.width ( px+'px' )
-		$cells.height ( px+'px' )
+		em = px / 10
+		$cells.width ( em+'em' )
+		$cells.height ( em+'em' )
 		#$cells.width( (100 / @width)+'%' )
 		#$cells.height( (100 / @height)+'%' )
 	
