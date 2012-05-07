@@ -1,0 +1,89 @@
+<!doctype html>
+<!--
+Anders D. Johnson
+joh07557@umn.edu
+UMN ID: 3955359
+-->
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="./styles/css/all.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="./javascript/lib/DataTables/css/jquery.dataTables_themeroller.css" /> -->
+	<link rel="stylesheet" type="text/css" href="./javascript/lib/jquery-ui/css/ui-darkness/jquery-ui-1.8.18.custom.css" />
+	<link rel="stylesheet" type="text/css" href="./javascript/lib/jquery-ui/css/jquery.ui.selectmenu.css" />
+	<script type="text/javascript">
+		// protect against browsers that don't support console
+		if (typeof window.console === 'undefined') {
+			window.console = {
+				log: function () {},
+				error: function () {},
+				info: function () {}
+			};
+		}
+	</script>
+	<script type="text/javascript" data-main="./javascript/load" src="./javascript/lib/requirejs/require.js"></script>
+</head>
+<body>
+	
+	<div id="tools" class="ui-widget-header">
+		<label for="map-select" class="ui-widget">Map:</label>
+		<select id="map-select" name="map-select"></select>
+		<input type="button" id="load" value="Load from file" />
+		<input type="button" id="make" value="Make map" />
+		<input type="button" id="edit" value="Edit map" />
+		<input type="button" id="run" value="Run" />
+		<input type="button" id="reset" value="Reset" />
+		<label for="anim-speed-slider" class="ui-widget">Speed:</label>
+		<div id="anim-speed-slider"></div>
+		<input type="button" id="zoomin" value="+" />
+		<input type="button" id="zoomout" value="-" />
+		<div id="zoom-slider"></div>
+		<div class="clear"></div>
+	</div>
+	
+	<div id="stats"></div>
+	
+	<div id="maps">
+		<div id="dfs" class="map-wrap ui-corner-all">
+			<h2>DFS</h2>
+			<div class="map"></div>
+		</div>
+		<div id="bfs" class="map-wrap ui-corner-all">
+			<h2>BFS</h2>
+			<div class="map"></div>
+		</div>
+		<div id="ucs" class="map-wrap ui-corner-all">
+			<h2>UCS</h2>
+			<div class="map"></div>	
+		</div>
+		<div id="gbfs" class="map-wrap ui-corner-all">
+			<h2>GBFS <em>Manhattan</em></h2>
+			<div class="map"></div>	
+		</div>
+		<div id="astar-manhattan" class="map-wrap ui-corner-all">
+			<h2>A* <em>Manhattan</em></h2>
+			<div class="map"></div>	
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div id="dialogs">
+		<div id="dialog-make" class="dialog" title="Make map">
+			<form>
+				<div id="make-form-tips"></div>
+				<textarea id="make-map-input" rows="6"></textarea><br />
+			</form>
+		</div>
+		<div id="dialog-load" class="dialog" title="Load map">
+			<form>
+				<div id="load-form-tips"></div>
+				<input type="file" multiple="multiple" id="load-map-input" /><br />
+			</form>
+		</div>
+	</div>
+	
+	<div id="credits">
+		By Anders D. Johnson &lt;joh07557@umn.edu&gt;
+	</div>
+	
+</body>
+</html>

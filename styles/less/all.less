@@ -1,0 +1,162 @@
+@import "../less-boilerplate/boilerplate.less";
+@import "_dataTables.less";
+
+html {
+	min-width: 0;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	color: white;
+	.gradientV(#000, #444);
+}
+
+.clear {
+	clear: both;
+}
+.float-left {
+	float: left;
+}
+.float-right {
+	float: right;
+}
+
+.ui-selectmenu-menu {
+	z-index: 5 !important;
+}
+
+#tools {
+	//background: #000;
+	font-size: 12px;
+	
+	input[type=button], label, select {
+		display: block;
+		float: left;
+		//margin: 4px;
+	}
+	label {
+		//padding: 4px;
+		//padding: 0.4em 1em;
+		padding: 0.4em 0.1em;
+		margin: 0;
+		margin-left: 0.4em;
+		margin-right: 0.1em;
+		position: relative;
+		text-align: center;
+	}
+	input[type=button] {
+		//padding: 4px;
+		//border: none;
+		//color: white;
+		//background: #000;
+		&:hover {
+			//background: #0af;
+			//color: black;
+		}
+	}
+	.ui-slider {
+		float: left;
+		width: 100px;
+		margin: 0.7em 0.1em;
+	}
+}
+
+#stats {
+	font-size: 12px;
+}
+
+#maps {
+	font-size: 14px;
+	
+	.map-wrap {
+		float: left;
+		.gradientV(#444, #222);
+		margin: 0.5em;
+		padding: 0.5em;
+		padding-top: 0.25em;
+		
+		h2 {
+			display: block;
+			margin: 0;
+			margin-bottom: 0.25em;
+			text-align: center;
+			font-family: sans-serif;
+			font-weight: bold;
+			font-size: 16px;
+		}
+		
+		.map {
+			
+			.cell {
+				position: relative;
+				float: left;
+				background: #fff;
+				border-width: 2px;
+				border-style: solid;
+				border-color: #ccc;
+				width: 10px;
+				color: black;
+				
+				&.wall {
+					background: #000 !important;
+					border-color: #222;
+					color: gray;
+					z-index: 2;
+				}
+				
+				&.path {
+					z-index: 4;
+				}
+				
+				&.cost {
+					z-index: 3;
+				}
+				&.cost-9 {
+					background: #222;
+				}
+				&.cost-8 {
+					background: #333;
+				}
+				&.cost-7 {
+					background: #444;
+				}
+				&.cost-6 {
+					background: #555;
+				}
+				&.cost-5 {
+					background: #666;
+				}
+				&.cost-4 {
+					background: #777;
+				}
+				&.cost-3 {
+					background: #888;
+				}
+				&.cost-2 {
+					background: #999;
+				}
+				&.cost-1 {
+					background: #aaa;
+				}
+			}
+		}
+	}
+}
+
+#dialogs {
+	.dialog {
+		display: none;
+		
+		&#dialog-load textarea {
+			display: block;
+			width: 100%;
+		}
+	}
+}
+
+#credits {
+	padding: 10px;
+	font-size: small;
+	text-align: left;
+}
+
