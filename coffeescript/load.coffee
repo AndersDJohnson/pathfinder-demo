@@ -74,6 +74,6 @@ require.config
 		"order": "lib/requirejs/order"
 	}
 
-require ['main', '_util', 'Graphs', 'Grid', 'lib/underscore', 'order!lib/jquery/jquery', 'order!lib/jquery/jquery.ba-dotimeout', 'order!lib/jquery/jquery.color', 'order!lib/jquery/jquery.jfontsize2', 'order!lib/jquery-ui/js/jquery-ui-1.8.18.custom.min', 'order!lib/jquery-ui/js/jquery.ui.selectmenu', 'order!lib/DataTables/js/jquery.dataTables.min'], loaded
+require ['main', 'util', 'Graphs', 'Grid', 'lib/underscore', 'order!lib/jquery/jquery', 'order!lib/jquery/jquery.ba-dotimeout', 'order!lib/jquery/jquery.color', 'order!lib/jquery/jquery.jfontsize2', 'order!lib/jquery-ui/js/jquery-ui-1.8.18.custom.min', 'order!lib/jquery-ui/js/jquery.ui.selectmenu', 'order!lib/DataTables/js/jquery.dataTables.min'], loaded
 
 
