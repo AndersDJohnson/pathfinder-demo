@@ -33,12 +33,12 @@ if typeof @define isnt 'function'
 				else
 					$cell.addClass('wall')
 				$cell.attr('data-name', Graphs.nameNode(i,j))
+				$cell.attr('data-cost', cell)
 				$row.append($cell)
 			@$div.append($row)
 		$cells = @$div.find('.cell')
 		px = baseWidth / @width
 		px = if px < 5 then 5 else px
-		console.log @width
 		$cells.width ( px+'px' )
 		$cells.height ( px+'px' )
 		#$cells.width( (100 / @width)+'%' )

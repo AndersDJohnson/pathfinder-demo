@@ -42,6 +42,7 @@ UMN ID: 3955359
             $cell.addClass('wall');
           }
           $cell.attr('data-name', Graphs.nameNode(i, j));
+          $cell.attr('data-cost', cell);
           $row.append($cell);
         }
         this.$div.append($row);
@@ -49,7 +50,6 @@ UMN ID: 3955359
       $cells = this.$div.find('.cell');
       px = baseWidth / this.width;
       px = px < 5 ? 5 : px;
-      console.log(this.width);
       $cells.width(px + 'px');
       return $cells.height(px + 'px');
     };

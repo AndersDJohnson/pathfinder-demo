@@ -4,6 +4,27 @@ joh07557@umn.edu
 UMN ID: 3955359
 ###
 
+if window?
+	unless window.console?
+		window.console =
+			assert: ->
+			count: ->
+			debug: ->
+			dir: ->
+			dirxml: ->
+			error: ->
+			group: ->
+			groupCollapsed: ->
+			groupEnd: ->
+			info: ->
+			markTimeline: ->
+			profile: ->
+			profileEnd: ->
+			time: ->
+			timeEnd: ->
+			trace: ->
+			warn: ->
+
 Timer = () ->
 	@startTime = 0
 	@endTime = 0
@@ -77,7 +98,7 @@ loadGridSearchFn = (mods) ->
 	
 		runs = []
 		grids = []
-		pathLengths = {}
+		pathcosts = {}
 		discovered = {}
 		times = {}
 		
@@ -107,11 +128,15 @@ loadGridSearchFn = (mods) ->
 						return
 					console.log name + ':', path
 					times[algo.id] = time
-					pathLengths[algo.id] = path.length
+					pathcosts[algo.id] = path.length
 					discovered[algo.id] = discovery.length
 					statObject['name'] = name
 					statObject['discovery'] = discovery.length
-					statObject['pathlength'] = path.length
+					realCost = 0
+					for cell in path
+						realCost += parseInt(grid.getCell(cell).attr("data-cost"))
+					console.log realCost
+					statObject['pathcost'] = realCost
 					statObject['time'] = time
 					statsArray.push statObject
 					#html = ''
@@ -150,8 +175,8 @@ loadGridSearchFn = (mods) ->
 						"sTitle": "Algorithm"
 					},
 					{
-						"mDataProp": "pathlength",
-						"sTitle": "Path Length"
+						"mDataProp": "pathcost",
+						"sTitle": "Path Cost"
 					},
 					{
 						"mDataProp": "discovery",
@@ -165,15 +190,15 @@ loadGridSearchFn = (mods) ->
 				"aaSorting": [[1,'asc'], [2,'asc'], [3,'asc']]
 			})
 			
-			pathLengthsMap = {}
+			pathcostsMap = {}
 			min = Infinity
-			for id, l of pathLengths
+			for id, l of pathcosts
 				min = if l < min then l else min
-				if not (l of pathLengthsMap)
-					pathLengthsMap[l] = []
-				pathLengthsMap[l].push id
-			cls = if pathLengthsMap[min].length > 1 then 'tie' else 'win'
-			for id in pathLengthsMap[min]
+				if not (l of pathcostsMap)
+					pathcostsMap[l] = []
+				pathcostsMap[l].push id
+			cls = if pathcostsMap[min].length > 1 then 'tie' else 'win'
+			for id in pathcostsMap[min]
 				$(id + ' .stats .path-length').addClass(cls)
 		
 			discoveredMap = {}
@@ -286,6 +311,17 @@ domReady = ( mods, gridObjects = {} ) ->
 	
 	loadGridSearch = loadGridSearchFn mods
 	
+	fileReaderErrorHandler = (e) ->
+		switch e.target.error.code
+			when e.target.error.NOT_FOUND_ERR
+				alert "File not found!"
+			when e.target.error.NOT_READABLE_ERR
+				alert "File not readable!"
+			when e.target.error.ABORT_ERR
+				break
+			else
+				alert "An unknown error occurred reading the file. Your browser may not support this feature."
+	
 	loadDialogOptions =
 		autoOpen: false
 		modal: true
@@ -296,20 +332,23 @@ domReady = ( mods, gridObjects = {} ) ->
 			click: () ->
 				if typeof window.File is "undefined" or typeof window.FileReader is "undefined"
 					alert "No support for HTML5 File API!"
+					return
 				filelist = $$.loadDialogInput.get(0).files
 				if filelist.length < 1
-					alert("No files selected!")
+					alert "No files selected!"
 					return
 				for file in filelist
 					reader = new FileReader()
-					reader.onload = ( e ) ->
-						#console.log e.target.result
-						s = 's'
-						g = 'g'
-						try
-							eval(e.target.result)
-						catch e
-							alert "Error loading file "#{file}" as map"
+					reader.onloadend = (e) ->
+						if e?.target?.error?
+							fileReaderErrorHandler(e)
+						else
+							s = 's'
+							g = 'g'
+							try
+								eval(e.target.result)
+							catch e
+								alert "Error loading file "#{file}" as map"
 					reader.readAsText file
 				$(this).dialog "close"
 				$$.runButton.button( "option", "disabled", false )

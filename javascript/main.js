@@ -8,6 +8,30 @@ UMN ID: 3955359
 (function() {
   var $$, Timer, algorithms, domReady, g, loadGridSearchFn, s;
 
+  if (typeof window !== "undefined" && window !== null) {
+    if (window.console == null) {
+      window.console = {
+        assert: function() {},
+        count: function() {},
+        debug: function() {},
+        dir: function() {},
+        dirxml: function() {},
+        error: function() {},
+        group: function() {},
+        groupCollapsed: function() {},
+        groupEnd: function() {},
+        info: function() {},
+        markTimeline: function() {},
+        profile: function() {},
+        profileEnd: function() {},
+        time: function() {},
+        timeEnd: function() {},
+        trace: function() {},
+        warn: function() {}
+      };
+    }
+  }
+
   Timer = function() {
     this.startTime = 0;
     return this.endTime = 0;
@@ -54,7 +78,7 @@ UMN ID: 3955359
   loadGridSearchFn = function(mods) {
     var loadGridSearch;
     loadGridSearch = function(gridObj) {
-      var algo, cell, discovered, goal, goalName, graph, grid, gridMap, grids, i, j, name, pathLengths, row, runs, sharedGoal, sharedGraph, sharedStart, start, startName, statsArray, times;
+      var algo, cell, discovered, goal, goalName, graph, grid, gridMap, grids, i, j, name, pathcosts, row, runs, sharedGoal, sharedGraph, sharedStart, start, startName, statsArray, times;
       gridMap = mods._util.object_clone(gridObj['map']);
       for (i in gridMap) {
         row = gridMap[i];
@@ -99,7 +123,7 @@ UMN ID: 3955359
       });
       runs = [];
       grids = [];
-      pathLengths = {};
+      pathcosts = {};
       discovered = {};
       times = {};
       statsArray = [];
@@ -113,7 +137,7 @@ UMN ID: 3955359
         goal = graph.getNode(goalName);
         runs.push((function(name, algo, grid, graph, start, goal) {
           return function() {
-            var callbacks, discovery, fn, path, sp, statObject, time, timer;
+            var callbacks, cell, discovery, fn, path, realCost, sp, statObject, time, timer, _i, _len;
             statObject = {};
             discovery = [];
             callbacks = {
@@ -132,11 +156,17 @@ UMN ID: 3955359
             }
             console.log(name + ':', path);
             times[algo.id] = time;
-            pathLengths[algo.id] = path.length;
+            pathcosts[algo.id] = path.length;
             discovered[algo.id] = discovery.length;
             statObject['name'] = name;
             statObject['discovery'] = discovery.length;
-            statObject['pathlength'] = path.length;
+            realCost = 0;
+            for (_i = 0, _len = path.length; _i < _len; _i++) {
+              cell = path[_i];
+              realCost += parseInt(grid.getCell(cell).attr("data-cost"));
+            }
+            console.log(realCost);
+            statObject['pathcost'] = realCost;
             statObject['time'] = time;
             statsArray.push(statObject);
             if (path !== null) {
@@ -153,7 +183,7 @@ UMN ID: 3955359
       }
       $$.maps.unbind('run');
       $$.maps.on('run', function(e) {
-        var $table, cls, discoveredMap, id, l, min, n, pathLengthsMap, run, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _results;
+        var $table, cls, discoveredMap, id, l, min, n, pathcostsMap, run, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _results;
         for (_i = 0, _len = runs.length; _i < _len; _i++) {
           run = runs[_i];
           run();
@@ -172,8 +202,8 @@ UMN ID: 3955359
               "mDataProp": "name",
               "sTitle": "Algorithm"
             }, {
-              "mDataProp": "pathlength",
-              "sTitle": "Path Length"
+              "mDataProp": "pathcost",
+              "sTitle": "Path Cost"
             }, {
               "mDataProp": "discovery",
               "sTitle": "Nodes Explored"
@@ -184,16 +214,16 @@ UMN ID: 3955359
           ],
           "aaSorting": [[1, 'asc'], [2, 'asc'], [3, 'asc']]
         });
-        pathLengthsMap = {};
+        pathcostsMap = {};
         min = Infinity;
-        for (id in pathLengths) {
-          l = pathLengths[id];
+        for (id in pathcosts) {
+          l = pathcosts[id];
           min = l < min ? l : min;
-          if (!(l in pathLengthsMap)) pathLengthsMap[l] = [];
-          pathLengthsMap[l].push(id);
+          if (!(l in pathcostsMap)) pathcostsMap[l] = [];
+          pathcostsMap[l].push(id);
         }
-        cls = pathLengthsMap[min].length > 1 ? 'tie' : 'win';
-        _ref = pathLengthsMap[min];
+        cls = pathcostsMap[min].length > 1 ? 'tie' : 'win';
+        _ref = pathcostsMap[min];
         for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
           id = _ref[_j];
           $(id + ' .stats .path-length').addClass(cls);
@@ -245,7 +275,7 @@ UMN ID: 3955359
   };
 
   domReady = function(mods, gridObjects) {
-    var addMap, ga, loadDialogOptions, loadGridSearch, makeDialogOptions, name;
+    var addMap, fileReaderErrorHandler, ga, loadDialogOptions, loadGridSearch, makeDialogOptions, name;
     if (gridObjects == null) gridObjects = {};
     addMap = function(obj) {
       var $opt, name;
@@ -310,6 +340,18 @@ UMN ID: 3955359
       addMap(ga);
     }
     loadGridSearch = loadGridSearchFn(mods);
+    fileReaderErrorHandler = function(e) {
+      switch (e.target.error.code) {
+        case e.target.error.NOT_FOUND_ERR:
+          return alert("File not found!");
+        case e.target.error.NOT_READABLE_ERR:
+          return alert("File not readable!");
+        case e.target.error.ABORT_ERR:
+          break;
+        default:
+          return alert("An unknown error occurred reading the file. Your browser may not support this feature.");
+      }
+    };
     loadDialogOptions = {
       autoOpen: false,
       modal: true,
@@ -323,6 +365,7 @@ UMN ID: 3955359
             var file, filelist, reader, _i, _len;
             if (typeof window.File === "undefined" || typeof window.FileReader === "undefined") {
               alert("No support for HTML5 File API!");
+              return;
             }
             filelist = $$.loadDialogInput.get(0).files;
             if (filelist.length < 1) {
@@ -332,13 +375,18 @@ UMN ID: 3955359
             for (_i = 0, _len = filelist.length; _i < _len; _i++) {
               file = filelist[_i];
               reader = new FileReader();
-              reader.onload = function(e) {
-                s = 's';
-                g = 'g';
-                try {
-                  return eval(e.target.result);
-                } catch (e) {
-                  return alert("Error loading file ");
+              reader.onloadend = function(e) {
+                var _ref;
+                if ((e != null ? (_ref = e.target) != null ? _ref.error : void 0 : void 0) != null) {
+                  return fileReaderErrorHandler(e);
+                } else {
+                  s = 's';
+                  g = 'g';
+                  try {
+                    return eval(e.target.result);
+                  } catch (e) {
+                    return alert("Error loading file ");
+                  }
                 }
               };
               reader.readAsText(file);
