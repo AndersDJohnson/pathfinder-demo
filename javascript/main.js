@@ -1,47 +1,40 @@
-
-/*
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
-*/
-
-(function() {
+(function () {
   var $$, Timer, algorithms, domReady, g, loadGridSearchFn, s;
 
   if (typeof window !== "undefined" && window !== null) {
     if (window.console == null) {
       window.console = {
-        assert: function() {},
-        count: function() {},
-        debug: function() {},
-        dir: function() {},
-        dirxml: function() {},
-        error: function() {},
-        group: function() {},
-        groupCollapsed: function() {},
-        groupEnd: function() {},
-        info: function() {},
-        markTimeline: function() {},
-        profile: function() {},
-        profileEnd: function() {},
-        time: function() {},
-        timeEnd: function() {},
-        trace: function() {},
-        warn: function() {}
+        assert: function () { },
+        count: function () { },
+        debug: function () { },
+        dir: function () { },
+        dirxml: function () { },
+        error: function () { },
+        group: function () { },
+        groupCollapsed: function () { },
+        groupEnd: function () { },
+        info: function () { },
+        markTimeline: function () { },
+        profile: function () { },
+        profileEnd: function () { },
+        time: function () { },
+        timeEnd: function () { },
+        trace: function () { },
+        warn: function () { }
       };
     }
   }
 
-  Timer = function() {
+  Timer = function () {
     this.startTime = 0;
     return this.endTime = 0;
   };
 
-  Timer.prototype.start = function() {
+  Timer.prototype.start = function () {
     return this.startTime = (new Date()).getTime();
   };
 
-  Timer.prototype.stop = function() {
+  Timer.prototype.stop = function () {
     this.endTime = (new Date()).getTime();
     return this.endTime - this.startTime;
   };
@@ -75,9 +68,9 @@ UMN ID: 3955359
 
   $$ = {};
 
-  loadGridSearchFn = function(mods) {
+  loadGridSearchFn = function (mods) {
     var loadGridSearch;
-    loadGridSearch = function(gridObj) {
+    loadGridSearch = function (gridObj) {
       var algo, cell, discovered, goal, goalName, graph, grid, gridMap, grids, i, j, name, pathcosts, row, runs, sharedGoal, sharedGraph, sharedStart, start, startName, statsArray, times;
       gridMap = mods._util.object_clone(gridObj['map']);
       for (i in gridMap) {
@@ -103,7 +96,7 @@ UMN ID: 3955359
       }
       $$.editButton.unbind('click');
       $$.editButton.removeAttr('disabled');
-      $$.editButton.on('click', function(e) {
+      $$.editButton.on('click', function (e) {
         var cell, i, j, row, tempMap, toEdit, _len, _len2;
         tempMap = mods._util.object_clone(gridObj['map']);
         for (i = 0, _len = tempMap.length; i < _len; i++) {
@@ -135,13 +128,13 @@ UMN ID: 3955359
         graph = mods._util.object_clone(sharedGraph);
         start = graph.getNode(startName);
         goal = graph.getNode(goalName);
-        runs.push((function(name, algo, grid, graph, start, goal) {
-          return function() {
+        runs.push((function (name, algo, grid, graph, start, goal) {
+          return function () {
             var callbacks, cell, discovery, fn, path, realCost, sp, statObject, time, timer, _i, _len;
             statObject = {};
             discovery = [];
             callbacks = {
-              'visit': function(data) {
+              'visit': function (data) {
                 return discovery.push(data);
               }
             };
@@ -175,14 +168,14 @@ UMN ID: 3955359
                 'speed': sp,
                 'path': path,
                 'discovery': discovery,
-                'callback': function() {}
+                'callback': function () { }
               });
             }
           };
         })(name, algo, grid, graph, start, goal));
       }
       $$.maps.unbind('run');
-      $$.maps.on('run', function(e) {
+      $$.maps.on('run', function (e) {
         var $table, cls, discoveredMap, id, l, min, n, pathcostsMap, run, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _results;
         for (_i = 0, _len = runs.length; _i < _len; _i++) {
           run = runs[_i];
@@ -246,7 +239,7 @@ UMN ID: 3955359
         return _results;
       });
       $$.maps.unbind('reset');
-      $$.maps.on('reset', function(e) {
+      $$.maps.on('reset', function (e) {
         var grid, _i, _len;
         for (_i = 0, _len = grids.length; _i < _len; _i++) {
           grid = grids[_i];
@@ -262,7 +255,7 @@ UMN ID: 3955359
         'menuWidth': 200,
         'wrapperElement': '<div class="float-left" />'
       });
-      return $$.gridSelect.on('change', function(e) {
+      return $$.gridSelect.on('change', function (e) {
         var grid, _i, _len;
         for (_i = 0, _len = grids.length; _i < _len; _i++) {
           grid = grids[_i];
@@ -274,10 +267,10 @@ UMN ID: 3955359
     return loadGridSearch;
   };
 
-  domReady = function(mods, gridObjects) {
+  domReady = function (mods, gridObjects) {
     var addMap, fileReaderErrorHandler, ga, loadDialogOptions, loadGridSearch, makeDialogOptions, name;
     if (gridObjects == null) gridObjects = {};
-    addMap = function(obj) {
+    addMap = function (obj) {
       var $opt, name;
       name = obj.name;
       gridObjects[name] = obj;
@@ -340,7 +333,7 @@ UMN ID: 3955359
       addMap(ga);
     }
     loadGridSearch = loadGridSearchFn(mods);
-    fileReaderErrorHandler = function(e) {
+    fileReaderErrorHandler = function (e) {
       switch (e.target.error.code) {
         case e.target.error.NOT_FOUND_ERR:
           return alert("File not found!");
@@ -355,13 +348,13 @@ UMN ID: 3955359
     loadDialogOptions = {
       autoOpen: false,
       modal: true,
-      close: function() {
+      close: function () {
         return $$.loadDialogInput.val("").removeClass("ui-state-error");
       },
       buttons: [
         {
           text: "Load",
-          click: function() {
+          click: function () {
             var file, filelist, reader, _i, _len;
             if (typeof window.File === "undefined" || typeof window.FileReader === "undefined") {
               alert("No support for HTML5 File API!");
@@ -375,7 +368,7 @@ UMN ID: 3955359
             for (_i = 0, _len = filelist.length; _i < _len; _i++) {
               file = filelist[_i];
               reader = new FileReader();
-              reader.onloadend = function(e) {
+              reader.onloadend = function (e) {
                 var _ref;
                 if ((e != null ? (_ref = e.target) != null ? _ref.error : void 0 : void 0) != null) {
                   return fileReaderErrorHandler(e);
@@ -397,29 +390,29 @@ UMN ID: 3955359
           }
         }, {
           text: "Cancel",
-          click: function() {
+          click: function () {
             return $(this).dialog("close");
           }
         }
       ]
     };
     $$.loadDialog.dialog(loadDialogOptions);
-    $$.loadButton.on('click', function(e) {
+    $$.loadButton.on('click', function (e) {
       $$.loadDialogTips.html('');
       return $$.loadDialog.dialog('open');
     });
     makeDialogOptions = {
       autoOpen: false,
       modal: true,
-      close: function() {
+      close: function () {
         return $$.makeDialogInput.val("").removeClass("ui-state-error");
       },
       buttons: [
         {
           text: "Make",
-          click: function() {
+          click: function () {
             var cell, grid, gridObject, i, input, isInt, j, row, _len, _len2;
-            input = (function() {
+            input = (function () {
               return $$.makeDialogInput.val();
             })();
             console.log('input:', input);
@@ -483,18 +476,18 @@ UMN ID: 3955359
           }
         }, {
           text: "Cancel",
-          click: function() {
+          click: function () {
             return $(this).dialog("close");
           }
         }
       ]
     };
     $$.makeDialog.dialog(makeDialogOptions);
-    $$.makeButton.on('click', function(e) {
+    $$.makeButton.on('click', function (e) {
       $$.makeDialogTips.html('');
       return $$.makeDialog.dialog('open');
     });
-    $$.gridSelect.on('change', function(e) {
+    $$.gridSelect.on('change', function (e) {
       var key;
       $$.allMaps.html('');
       key = $$.gridSelect.val();
@@ -502,12 +495,12 @@ UMN ID: 3955359
       $$.runButton.button("option", "disabled", false);
       return $$.runButton.button("refresh");
     });
-    $$.runButton.on('click', function(e) {
+    $$.runButton.on('click', function (e) {
       $$.maps.trigger('run');
       $$.runButton.button("option", "disabled", true);
       return $$.runButton.button("refresh");
     });
-    $$.resetButton.on('click', function(e) {
+    $$.resetButton.on('click', function (e) {
       $$.maps.trigger('reset');
       $$.runButton.button("option", "disabled", false);
       return $$.runButton.button("refresh");
@@ -515,7 +508,7 @@ UMN ID: 3955359
     return loadGridSearch(_.values(gridObjects)[0]);
   };
 
-  this.define(function(require) {
+  this.define(function (require) {
     var exports;
     exports = {
       'g': g,

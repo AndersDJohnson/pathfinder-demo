@@ -1,18 +1,11 @@
-
-/*
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
-*/
-
-(function() {
+(function () {
   var __hasProp = Object.prototype.hasOwnProperty;
 
   if (typeof this.define !== 'function') this.define = require('amdefine')(module);
 
-  this.define(function(require) {
+  this.define(function (require) {
     var array_random, exports, getName, isInt, object_clone, object_merge;
-    getName = function(thing) {
+    getName = function (thing) {
       var funcNameRegex, results;
       if (typeof this.name !== 'undefined') {
         return this.name;
@@ -22,13 +15,13 @@ UMN ID: 3955359
         return (results && results.length > 1 ? results[1] : "");
       }
     };
-    isInt = function(n) {
+    isInt = function (n) {
       return !!((getName(n) === 'Number') && (parseFloat(n) === parseInt(n)) && (!isNaN(n)));
     };
-    array_random = function(array) {
+    array_random = function (array) {
       return Math.round(Math.random() * array.length);
     };
-    object_clone = function(src) {
+    object_clone = function (src) {
       var k, neu, v, _i, _len;
       if (typeof src !== 'object' || src === null) return src;
       neu = new src.constructor();
@@ -47,11 +40,11 @@ UMN ID: 3955359
       }
       return neu;
     };
-    object_merge = function(original, merging, clone, join_arrays) {
+    object_merge = function (original, merging, clone, join_arrays) {
       var recursive;
       if (clone == null) clone = false;
       if (join_arrays == null) join_arrays = false;
-      recursive = function(original, merging, clone) {
+      recursive = function (original, merging, clone) {
         var key, obj, value;
         if (original === null || typeof original !== "object") return merging;
         obj = clone ? module.exports.object_clone(original) : original;
