@@ -1,9 +1,3 @@
-###
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
-###
-
 if window?
 	unless window.console?
 		window.console =

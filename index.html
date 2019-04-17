@@ -1,29 +1,27 @@
 <!doctype html>
-<!--
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
--->
 <html>
+
 <head>
 	<link rel="stylesheet" type="text/css" href="./styles/css/all.css" />
 	<!-- <link rel="stylesheet" type="text/css" href="./javascript/lib/DataTables/css/jquery.dataTables_themeroller.css" /> -->
-	<link rel="stylesheet" type="text/css" href="./javascript/lib/jquery-ui/css/ui-darkness/jquery-ui-1.8.18.custom.css" />
+	<link rel="stylesheet" type="text/css"
+		href="./javascript/lib/jquery-ui/css/ui-darkness/jquery-ui-1.8.18.custom.css" />
 	<link rel="stylesheet" type="text/css" href="./javascript/lib/jquery-ui/css/jquery.ui.selectmenu.css" />
 	<script type="text/javascript">
 		// protect against browsers that don't support console
 		if (typeof window.console === 'undefined') {
 			window.console = {
-				log: function () {},
-				error: function () {},
-				info: function () {}
+				log: function () { },
+				error: function () { },
+				info: function () { }
 			};
 		}
 	</script>
 	<script type="text/javascript" data-main="./javascript/load" src="./javascript/lib/requirejs/require.js"></script>
 </head>
+
 <body>
-	
+
 	<div id="tools" class="ui-widget-header">
 		<label for="map-select" class="ui-widget">Map:</label>
 		<select id="map-select" name="map-select"></select>
@@ -39,9 +37,9 @@ UMN ID: 3955359
 		<div id="zoom-slider"></div>
 		<div class="clear"></div>
 	</div>
-	
+
 	<div id="stats"></div>
-	
+
 	<div id="maps">
 		<div id="dfs" class="map-wrap ui-corner-all">
 			<h2>DFS</h2>
@@ -53,19 +51,19 @@ UMN ID: 3955359
 		</div>
 		<div id="ucs" class="map-wrap ui-corner-all">
 			<h2>UCS</h2>
-			<div class="map"></div>	
+			<div class="map"></div>
 		</div>
 		<div id="gbfs" class="map-wrap ui-corner-all">
 			<h2>GBFS <em>Manhattan</em></h2>
-			<div class="map"></div>	
+			<div class="map"></div>
 		</div>
 		<div id="astar-manhattan" class="map-wrap ui-corner-all">
 			<h2>A* <em>Manhattan</em></h2>
-			<div class="map"></div>	
+			<div class="map"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
-	
+
 	<div id="dialogs">
 		<div id="dialog-make" class="dialog" title="Make map">
 			<form>
@@ -80,10 +78,11 @@ UMN ID: 3955359
 			</form>
 		</div>
 	</div>
-	
+
 	<div id="credits">
-		By Anders D. Johnson &lt;joh07557@umn.edu&gt;
+		By <a href="https://andersdjohnson.com">Anders D. Johnson</a>, <a
+			href="https://github.com/AndersDJohnson/pathfinder-demo">source</a>
 	</div>
-	
 </body>
+
 </html>

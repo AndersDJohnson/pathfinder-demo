@@ -1,14 +1,7 @@
-
-/*
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
-*/
-
-(function() {
+(function () {
   var loaded;
 
-  loaded = function(main, _util, Graphs, Grid) {
+  loaded = function (main, _util, Graphs, Grid) {
     var g, grids, mods, s;
     mods = {
       '_util': _util,
@@ -37,7 +30,7 @@ UMN ID: 3955359
         'map': [[s, -1, 1, 1, 1, -1, 1, 1, 1], [1, -1, 1, -1, 1, -1, 1, -1, 1], [1, -1, 1, -1, 1, -1, 1, -1, 1], [1, -1, 1, -1, 1, -1, 1, -1, 1], [1, -1, 1, -1, 1, -1, 1, -1, 1], [1, 1, 1, -1, 1, 1, 1, -1, g]]
       }
     };
-    return $(function() {
+    return $(function () {
       return main.domReady(mods, grids);
     });
   };

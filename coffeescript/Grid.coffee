@@ -1,9 +1,3 @@
-###
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
-###
-
 baseWidth = 180
 
 if typeof @define isnt 'function'

@@ -1,20 +1,14 @@
 
-/*
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
-*/
-
-(function() {
+(function () {
   var __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
+    __extends = function (child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __slice = Array.prototype.slice;
 
   if (typeof this.define !== 'function') this.define = require('amdefine')(module);
 
-  this.define(function(require) {
+  this.define(function (require) {
     var Astar, AstarManhattan, BFS, DFS, Edge, GBFS, GBFSManhattan, Graph, Node, Search, UCS, exports, graph_from_grid, manhattanDistance, nameNode;
-    Edge = function(from, to, cost) {
+    Edge = function (from, to, cost) {
       if (from == null) from = null;
       if (to == null) to = null;
       if (cost == null) cost = 1;
@@ -22,7 +16,7 @@ UMN ID: 3955359
       this.to = to;
       return this;
     };
-    Node = function(name, cost, x, y) {
+    Node = function (name, cost, x, y) {
       if (name == null) name = '';
       if (cost == null) cost = 1;
       if (x == null) x = NaN;
@@ -34,16 +28,16 @@ UMN ID: 3955359
       this.cost = cost;
       return this;
     };
-    Node.prototype.visit = function() {
+    Node.prototype.visit = function () {
       return this.visited = true;
     };
-    Graph = function() {
+    Graph = function () {
       this._nid = 0;
       this.nodes = {};
       this.edges = {};
       return this;
     };
-    Graph.prototype.numNodes = function() {
+    Graph.prototype.numNodes = function () {
       var k, n, v, _len, _ref;
       n = 0;
       _ref = this.nodes;
@@ -53,12 +47,12 @@ UMN ID: 3955359
       }
       return n;
     };
-    Graph.prototype.addNode = function(node) {
+    Graph.prototype.addNode = function (node) {
       node['_nid'] = '' + (this._nid++);
       this.nodes[node.name] = node;
       return node;
     };
-    Graph.prototype.addNodes = function(nodes) {
+    Graph.prototype.addNodes = function (nodes) {
       var node, _i, _len, _results;
       _results = [];
       for (_i = 0, _len = nodes.length; _i < _len; _i++) {
@@ -67,23 +61,23 @@ UMN ID: 3955359
       }
       return _results;
     };
-    Graph.prototype.getNode = function(name) {
+    Graph.prototype.getNode = function (name) {
       if (name in this.nodes) {
         return this.nodes[name];
       } else {
         return null;
       }
     };
-    Graph.prototype.getNodes = function() {
+    Graph.prototype.getNodes = function () {
       return this.nodes;
     };
-    Graph.prototype.addEdge = function(edge) {
+    Graph.prototype.addEdge = function (edge) {
       var key;
       key = edge.from['_nid'];
       if (!(key in this.edges)) this.edges[key] = [];
       return this.edges[key].push(edge);
     };
-    Graph.prototype.addEdges = function(edges) {
+    Graph.prototype.addEdges = function (edges) {
       var edge, _i, _len, _results;
       _results = [];
       for (_i = 0, _len = edges.length; _i < _len; _i++) {
@@ -92,7 +86,7 @@ UMN ID: 3955359
       }
       return _results;
     };
-    Graph.prototype.getEdges = function(node) {
+    Graph.prototype.getEdges = function (node) {
       if (node == null) node = null;
       if (node === null) {
         return this.edges;
@@ -100,10 +94,10 @@ UMN ID: 3955359
         return this.edges[node['_nid']];
       }
     };
-    nameNode = function(i, j) {
+    nameNode = function (i, j) {
       return i + ',' + j;
     };
-    graph_from_grid = function(grid) {
+    graph_from_grid = function (grid) {
       var adj, cell, edge, fromName, fromNode, graph, i, i2, j, j2, row, toName, toNode, _i, _len, _len2, _len3, _ref;
       graph = new Graph();
       for (i = 0, _len = grid.length; i < _len; i++) {
@@ -140,7 +134,7 @@ UMN ID: 3955359
       }
       return graph;
     };
-    Search = (function() {
+    Search = (function () {
 
       function Search(graph, start, goal, callbacks) {
         if (callbacks == null) callbacks = {};
@@ -153,7 +147,7 @@ UMN ID: 3955359
       return Search;
 
     })();
-    DFS = (function(_super) {
+    DFS = (function (_super) {
 
       __extends(DFS, _super);
 
@@ -161,7 +155,7 @@ UMN ID: 3955359
         DFS.__super__.constructor.apply(this, arguments);
       }
 
-      DFS.prototype.run = function() {
+      DFS.prototype.run = function () {
         var current, edge, edges, node, path, stack, visited, _i, _len;
         visited = {};
         stack = [[this.start]];
@@ -176,7 +170,7 @@ UMN ID: 3955359
           }
           visited[current.name] = true;
           if (current.name === this.goal.name) {
-            return (function() {
+            return (function () {
               var _i, _len, _results;
               _results = [];
               for (_i = 0, _len = path.length; _i < _len; _i++) {
@@ -199,7 +193,7 @@ UMN ID: 3955359
       return DFS;
 
     })(Search);
-    BFS = (function(_super) {
+    BFS = (function (_super) {
 
       __extends(BFS, _super);
 
@@ -207,7 +201,7 @@ UMN ID: 3955359
         BFS.__super__.constructor.apply(this, arguments);
       }
 
-      BFS.prototype.run = function() {
+      BFS.prototype.run = function () {
         var current, edge, edges, node, path, queue, visited, _i, _len;
         visited = {};
         queue = [[this.start]];
@@ -222,7 +216,7 @@ UMN ID: 3955359
           }
           visited[current.name] = true;
           if (current.name === this.goal.name) {
-            return (function() {
+            return (function () {
               var _i, _len, _results;
               _results = [];
               for (_i = 0, _len = path.length; _i < _len; _i++) {
@@ -245,10 +239,10 @@ UMN ID: 3955359
       return BFS;
 
     })(Search);
-    manhattanDistance = function(node1, node2) {
+    manhattanDistance = function (node1, node2) {
       return Math.abs(node2.y - node1.y) + Math.abs(node2.x - node1.x);
     };
-    Astar = (function(_super) {
+    Astar = (function (_super) {
 
       __extends(Astar, _super);
 
@@ -259,7 +253,7 @@ UMN ID: 3955359
         this.heuristic = heuristic;
       }
 
-      Astar.prototype.run = function() {
+      Astar.prototype.run = function () {
         var candF, candidate, closed, current, currentName, edge, edges, f, from, g, h, i, inOpen, minF, minFnode, o, open, path, temp_better, temp_g, _i, _j, _len, _len2, _len3, _len4;
         closed = {};
         open = [this.start];
@@ -344,7 +338,7 @@ UMN ID: 3955359
       return Astar;
 
     })(Search);
-    AstarManhattan = (function(_super) {
+    AstarManhattan = (function (_super) {
 
       __extends(AstarManhattan, _super);
 
@@ -358,7 +352,7 @@ UMN ID: 3955359
       return AstarManhattan;
 
     })(Astar);
-    GBFS = (function(_super) {
+    GBFS = (function (_super) {
 
       __extends(GBFS, _super);
 
@@ -369,7 +363,7 @@ UMN ID: 3955359
         this.heuristic = heuristic;
       }
 
-      GBFS.prototype.run = function() {
+      GBFS.prototype.run = function () {
         var candF, candidate, closed, current, currentName, edge, edges, f, from, g, h, i, inOpen, minF, minFnode, o, open, path, temp_better, temp_g, _i, _j, _len, _len2, _len3, _len4;
         closed = {};
         open = [this.start];
@@ -454,7 +448,7 @@ UMN ID: 3955359
       return GBFS;
 
     })(Search);
-    GBFSManhattan = (function(_super) {
+    GBFSManhattan = (function (_super) {
 
       __extends(GBFSManhattan, _super);
 
@@ -468,7 +462,7 @@ UMN ID: 3955359
       return GBFSManhattan;
 
     })(GBFS);
-    AstarManhattan = (function(_super) {
+    AstarManhattan = (function (_super) {
 
       __extends(AstarManhattan, _super);
 
@@ -482,7 +476,7 @@ UMN ID: 3955359
       return AstarManhattan;
 
     })(Astar);
-    UCS = (function(_super) {
+    UCS = (function (_super) {
 
       __extends(UCS, _super);
 
@@ -490,7 +484,7 @@ UMN ID: 3955359
         UCS.__super__.constructor.apply(this, arguments);
       }
 
-      UCS.prototype.run = function() {
+      UCS.prototype.run = function () {
         var candF, candidate, closed, current, currentName, edge, edges, f, from, g, i, inOpen, minF, minFnode, o, open, path, temp_better, temp_g, _i, _j, _len, _len2, _len3, _len4;
         closed = {};
         open = [this.start];

@@ -1,9 +1,3 @@
-###
-Anders D. Johnson
-joh07557@umn.edu
-UMN ID: 3955359
-###
-
 loaded = ( main, _util, Graphs, Grid ) ->
 	mods =
 		'_util': _util
